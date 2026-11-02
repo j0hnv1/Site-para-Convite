@@ -1,0 +1,326 @@
+/* ===== Página 3: áreas de toque ===== */
+.hotspot {
+  position: absolute;
+  display: block;
+  border-radius: calc(var(--u) * 4);
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+/* ampliar a área de toque além do desenho (mínimo ~44px) */
+.hotspot::before {
+  content: '';
+  position: absolute;
+  inset: calc(var(--u) * -1.2);
+}
+.hotspot__glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  transition: box-shadow 0.3s var(--ease-out), background-color 0.25s, transform 0.25s var(--ease-out);
+}
+/* círculo do ícone: 225px dentro de uma área de 250px de largura */
+.hotspot--circle .hotspot__glow {
+  left: 5%;
+  top: 2%;
+  width: 90%;
+  aspect-ratio: 1;
+}
+/* pílula Dress code */
+.hotspot--pill {
+  border-radius: 999px;
+}
+.hotspot--pill .hotspot__glow {
+  inset: 0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.hotspot--pill .hotspot__glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+  transform: translateX(-125%);
+}
+
+.hotspot:active .hotspot__glow {
+  background-color: rgba(255, 255, 255, 0.14);
+  transform: scale(0.96);
+  box-shadow: 0 0 0 calc(var(--u) * 0.5) rgba(216, 170, 98, 0.75);
+}
+.hotspot:focus-visible {
+  outline: none;
+}
+.hotspot:focus-visible .hotspot__glow {
+  box-shadow: 0 0 0 calc(var(--u) * 0.6) var(--gold), 0 0 calc(var(--u) * 3) rgba(216, 170, 98, 0.5);
+}
+.hotspot--pill:active .hotspot__glow::after,
+.hotspot--pill:focus-visible .hotspot__glow::after {
+  animation: sheen 0.7s var(--ease-out);
+}
+@media (hover: hover) {
+  .hotspot:hover .hotspot__glow {
+    box-shadow: 0 0 0 calc(var(--u) * 0.45) rgba(216, 170, 98, 0.6), 0 0 calc(var(--u) * 3) rgba(216, 170, 98, 0.4);
+    transform: scale(1.03);
+  }
+  .hotspot--pill:hover .hotspot__glow::after {
+    animation: sheen 0.9s var(--ease-out);
+  }
+}
+@keyframes sheen {
+  to {
+    transform: translateX(125%);
+  }
+}
+
+/* ===== Cronômetro ===== */
+.countdown {
+  position: absolute;
+  display: flex;
+  gap: calc(var(--u) * 2.2);
+  pointer-events: none;
+}
+.countdown__cell {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 0.9);
+  border-radius: calc(var(--u) * 2.6);
+  background: linear-gradient(180deg, rgba(58, 16, 82, 0.66), rgba(36, 9, 54, 0.78));
+  border: 1px solid rgba(216, 170, 98, 0.42);
+  box-shadow: 0 calc(var(--u) * 0.8) calc(var(--u) * 2.4) rgba(10, 2, 18, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.countdown__num {
+  font-size: max(22px, calc(var(--u) * 7.2));
+  font-weight: 600;
+  line-height: 1;
+  color: var(--lilac);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.countdown__label {
+  font-size: max(10px, calc(var(--u) * 2.7));
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  opacity: 0.92;
+}
+
+/* ===== Janelas (Localização, Dress code, Confirmar presença) ===== */
+.sheet-root {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 3, 24, 0.6);
+  animation: fade-in 0.25s ease both;
+}
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 80%;
+  overflow-y: auto;
+  padding: calc(var(--u) * 5.5) calc(var(--u) * 7) calc(var(--u) * 9);
+  border-radius: calc(var(--u) * 5) calc(var(--u) * 5) 0 0;
+  border-top: 1px solid var(--gold-soft);
+  background: linear-gradient(180deg, #43175f 0%, var(--purple-900) 100%);
+  box-shadow: 0 calc(var(--u) * -2) calc(var(--u) * 6) rgba(8, 1, 16, 0.55);
+  animation: sheet-up 0.34s var(--ease-out) both;
+}
+.sheet-root.is-closing .sheet-backdrop {
+  animation: fade-out 0.24s ease both;
+}
+.sheet-root.is-closing .sheet {
+  animation: sheet-down 0.24s ease-in both;
+}
+.sheet__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  margin-bottom: calc(var(--u) * 4);
+}
+.sheet__title {
+  margin: 0;
+  font-size: max(24px, calc(var(--u) * 7));
+  font-weight: 500;
+  color: var(--lilac);
+}
+.sheet__close {
+  flex: none;
+  width: max(44px, calc(var(--u) * 11));
+  height: max(44px, calc(var(--u) * 11));
+  margin-right: calc(var(--u) * -2);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+.sheet__close svg {
+  width: 46%;
+  height: 46%;
+  fill: none;
+  stroke: var(--cream);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.sheet__close:active {
+  background: rgba(255, 255, 255, 0.12);
+}
+.sheet__strong {
+  margin: 0 0 calc(var(--u) * 1.5);
+  font-size: max(19px, calc(var(--u) * 5.6));
+  font-weight: 600;
+}
+.sheet__text {
+  margin: 0 0 calc(var(--u) * 3);
+  font-size: max(16px, calc(var(--u) * 4.6));
+  line-height: 1.5;
+}
+.sheet__muted {
+  margin: 0 0 calc(var(--u) * 3);
+  font-size: max(16px, calc(var(--u) * 4.6));
+  line-height: 1.5;
+  font-style: italic;
+  opacity: 0.78;
+}
+.sheet__list {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: max(16px, calc(var(--u) * 4.6));
+  line-height: 1.6;
+}
+.sheet__list li::marker {
+  color: var(--gold);
+}
+.sheet__btn {
+  display: flex;
+  margin: calc(var(--u) * 5) auto 0;
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes sheet-down {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* ===== Formulário de confirmação (WhatsApp) ===== */
+.rsvp {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 4);
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 1.6);
+}
+.field__label {
+  font-size: max(14px, calc(var(--u) * 4));
+  opacity: 0.9;
+}
+.field__input {
+  width: 100%;
+  min-height: max(46px, calc(var(--u) * 12));
+  padding: 0 calc(var(--u) * 4);
+  border-radius: calc(var(--u) * 3);
+  border: 1px solid rgba(216, 170, 98, 0.4);
+  background: rgba(20, 5, 32, 0.55);
+  color: #fff;
+  font-family: inherit;
+  font-size: max(16px, calc(var(--u) * 4.6)); /* 16px+ evita zoom automático no iPhone */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field__input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 calc(var(--u) * 0.6) rgba(216, 170, 98, 0.35);
+}
+.field__input[aria-invalid='true'] {
+  border-color: #ff9bb0;
+}
+.field__error {
+  font-size: max(13px, calc(var(--u) * 3.5));
+  color: #ffb3c4;
+}
+.seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 1);
+  border-radius: 999px;
+  background: rgba(20, 5, 32, 0.55);
+  border: 1px solid rgba(216, 170, 98, 0.3);
+}
+.seg__opt {
+  min-height: max(42px, calc(var(--u) * 10.5));
+  border-radius: 999px;
+  font-size: max(14px, calc(var(--u) * 4));
+  transition: background 0.25s, color 0.25s;
+}
+.seg__opt.is-on {
+  background: var(--purple-700);
+  box-shadow: inset 0 0 0 1px var(--gold-soft);
+}
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+}
+.stepper__btn {
+  width: max(46px, calc(var(--u) * 12));
+  height: max(46px, calc(var(--u) * 12));
+  border-radius: 50%;
+  background: var(--purple-700);
+  border: 1px solid var(--gold-soft);
+  font-size: max(22px, calc(var(--u) * 6.4));
+  line-height: 1;
+  transition: transform 0.15s;
+}
+.stepper__btn:active {
+  transform: scale(0.92);
+}
+.stepper__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.stepper__value {
+  flex: 1;
+  text-align: center;
+  font-size: max(18px, calc(var(--u) * 5.2));
+}
+
+/* ===== Confirmação enviada ===== */
+.sheet__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(var(--u) * 3);
+  margin-top: calc(var(--u) * 5);
+}
+.sheet__actions .pill-btn {
+  width: 100%;
+  font-size: max(16px, calc(var(--u) * 4.6));
+}
+.rsvp__note {
+  margin: calc(var(--u) * -1) 0 0;
+  text-align: center;
+  font-size: max(13px, calc(var(--u) * 3.5));
+  opacity: 0.75;
+}

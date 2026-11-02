@@ -1,0 +1,131 @@
+/* ===== Transições entre páginas =====
+   Todas usam só opacity/transform (leves em celulares) e as durações vêm de
+   src/lib/timings.js (--t-reveal, --t-rise, --t-slide). */
+
+/* envelope -> página 2: surge por trás das abas, assentando suavemente */
+.layer--enter-reveal {
+  animation: fade-in var(--t-reveal) ease both;
+}
+.layer--enter-reveal .frame {
+  animation: settle var(--t-reveal) var(--ease-out) both;
+}
+
+/* página 2 -> 3: avança "para dentro" do convite */
+.layer--leave-rise {
+  z-index: 1;
+  pointer-events: none;
+  animation: fade-out var(--t-rise) ease-in forwards;
+}
+.layer--leave-rise .frame {
+  animation: zoom-out var(--t-rise) var(--ease-io) forwards;
+}
+.layer--enter-rise {
+  z-index: 2;
+  animation: fade-in var(--t-rise) ease both;
+}
+.layer--enter-rise .frame {
+  animation: settle var(--t-rise) var(--ease-out) both;
+}
+
+/* página 3 -> 2 (fall): o inverso do "rise" */
+.layer--leave-fall {
+  z-index: 1;
+  pointer-events: none;
+  animation: fade-out var(--t-rise) ease-in forwards;
+}
+.layer--leave-fall .frame {
+  animation: zoom-in-out var(--t-rise) var(--ease-io) forwards;
+}
+.layer--enter-fall {
+  z-index: 2;
+  animation: fade-in var(--t-rise) ease both;
+}
+.layer--enter-fall .frame {
+  animation: settle-down var(--t-rise) var(--ease-out) both;
+}
+
+/* página 3 -> 4 (forward) e 4 -> 3 (back): deslizam lateralmente */
+.layer--leave-forward,
+.layer--leave-back {
+  z-index: 1;
+  pointer-events: none;
+  animation: fade-out var(--t-slide) ease forwards;
+}
+.layer--leave-forward .frame {
+  animation: slide-out-left var(--t-slide) var(--ease-io) forwards;
+}
+.layer--leave-back .frame {
+  animation: slide-out-right var(--t-slide) var(--ease-io) forwards;
+}
+.layer--enter-forward,
+.layer--enter-back {
+  z-index: 2;
+  animation: fade-in var(--t-slide) ease both;
+}
+.layer--enter-forward .frame {
+  animation: slide-in-right var(--t-slide) var(--ease-out) both;
+}
+.layer--enter-back .frame {
+  animation: slide-in-left var(--t-slide) var(--ease-out) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(0.94);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes zoom-in-out {
+  to {
+    transform: scale(0.94);
+  }
+}
+@keyframes settle-down {
+  from {
+    transform: scale(1.07);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes zoom-out {
+  to {
+    transform: scale(1.07);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(9%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-9%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-out-left {
+  to {
+    transform: translateX(-9%);
+  }
+}
+@keyframes slide-out-right {
+  to {
+    transform: translateX(9%);
+  }
+}
