@@ -20,6 +20,11 @@ Requer Node 18+. Dependências: apenas React e, para desenvolvimento, Vite.
 | **Evento no calendário** | `calendar` (data, hora, **duração** e título). Ao confirmar, baixa um arquivo `.ics` e o painel oferece Google Agenda. Hoje: 23/01/2027 às 19h (como na imagem), duração provisória de 4h. Código: `src/lib/calendar.js`. |
 | **Confirmar presença (WhatsApp)** | `rsvp.whatsappNumber` (só dígitos, com 55 + DDD, ex.: `5541999999999`) e os textos `messageAlone` / `messageWithGuests`. A pessoa informa nome, se vai levar alguém, quem e quantas pessoas; o WhatsApp abre com a mensagem pronta. Sem número, o WhatsApp pede para escolher o contato. Código: `src/components/Rsvp.jsx` e `src/lib/whatsapp.js`. |
 
+## Painel de confirmações (escondido)
+Mostra o total de pessoas, as confirmações e **quem cada convidado vai levar**. Acesso: na primeira página (envelope), **5 toques seguidos no canto inferior esquerdo** (ou abrir o site com `#painel` no endereço). Login: `linda123@` / `linda123@` (troque no script; veja o guia).
+Para funcionar de verdade é preciso conectar o Google Planilhas (5 minutos, gratuito): **`backend/LEIA-ME.md`**. Código do servidor: `backend/apps-script.gs`; telas: `src/components/AdminPanel.jsx`.
+Em `npm run dev`, sem servidor conectado, o painel funciona em *modo de teste* (guarda no navegador) só para você ver como fica.
+
 ## Estrutura
 ```
 src/App.jsx                 ordem das páginas e transições
@@ -29,6 +34,7 @@ src/components/
   EventDetails.jsx          página 3 (+ Countdown, Location, Rsvp)
   DressCode.jsx             página de Dress code (imagem + botão Voltar)
   GiftSuggestions.jsx       página 4 + botão Voltar
+  AdminPanel.jsx            painel escondido (login + lista)
   BottomSheet.jsx           janela usada por Localização / Dress code / Confirmar presença
 src/config/layout.js        posição das áreas de toque sobre as imagens (px da imagem 1080×1920)
 src/lib/timings.js          duração de todas as animações

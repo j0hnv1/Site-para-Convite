@@ -5,6 +5,7 @@ import Invitation from './components/Invitation.jsx';
 import EventDetails from './components/EventDetails.jsx';
 import GiftSuggestions from './components/GiftSuggestions.jsx';
 import DressCode from './components/DressCode.jsx';
+import AdminPanel from './components/AdminPanel.jsx';
 import { T } from './lib/timings.js';
 import page2 from './assets/page2.webp';
 import page3 from './assets/page3.webp';
@@ -44,6 +45,7 @@ export default function App() {
   // envelope: 'closed' | 'opening' | 'gone'
   const [envelope, setEnvelope] = useState('closed');
   const [nav, setNav] = useState({ current: 2, leaving: null, kind: 'reveal' });
+  const [admin, setAdmin] = useState(() => window.location.hash === '#painel');
   const busy = useRef(false);
   const timer = useRef(null);
 
@@ -88,6 +90,16 @@ export default function App() {
         <Envelope
           onOpening={() => setEnvelope('opening')}
           onOpened={() => setEnvelope('gone')}
+          onAdmin={() => setAdmin(true)}
+        />
+      )}
+
+      {admin && (
+        <AdminPanel
+          onClose={() => {
+            setAdmin(false);
+            if (window.location.hash === '#painel') history.replaceState(null, '', window.location.pathname + window.location.search);
+          }}
         />
       )}
     </>

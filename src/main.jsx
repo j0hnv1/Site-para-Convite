@@ -6,6 +6,7 @@ import './styles/base.css';
 import './styles/envelope.css';
 import './styles/transitions.css';
 import './styles/event.css';
+import './styles/admin.css';
 
 applyTimingVars();
 

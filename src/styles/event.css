@@ -324,3 +324,8 @@
   font-size: max(13px, calc(var(--u) * 3.5));
   opacity: 0.75;
 }
+.rsvp__status {
+  margin: calc(var(--u) * 3) 0 0;
+  font-size: max(14px, calc(var(--u) * 3.8));
+  color: var(--gold);
+}

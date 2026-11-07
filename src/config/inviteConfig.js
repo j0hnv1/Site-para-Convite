@@ -9,9 +9,9 @@ export const inviteConfig = {
    *  trocar para date: '2027-01-23' e time: '19:00'.)
    */
   countdown: {
-    date: '2027-01-10', // AAAA-MM-DD
-    time: '00:00', // HH:mm (24h)
-    timeZone: 'America/Sao_Paulo',
+    date: "2027-01-10", // AAAA-MM-DD
+    time: "00:00", // HH:mm (24h)
+    timeZone: "America/Sao_Paulo",
   },
 
   /**
@@ -20,11 +20,11 @@ export const inviteConfig = {
    * confira e corrija se necessário. Se quiser, preencha também o endereço.
    */
   location: {
-    name: 'Viva Eventos',
-    address: '', // endereço completo (opcional)
+    name: "Viva Eventos",
+    address: "", // endereço completo (opcional)
     mapsUrl:
-      'https://www.google.com/maps?vet=10CAAQoqAOahcKEwjo8MbvkuiXAxUAAAAAHQAAAAAQDg..i&udm&fvr=1&pvq=Cg0vZy8xMWw2OTI1OV9mIhIKDHZpdmEgZXZlbnRvcxACGAM&lqi=Cgx2aXZhIGV2ZW50b3MiA4gBAUjtz4qRmbKAgAhaFhAAEAEYABgBIgx2aXZhIGV2ZW50b3OSAQxiYW5xdWV0X2hhbGyaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMjF3VUU1c09WcE9NVXBRVkdwVmVHTXdkRmxUVjFad1ZERldiMlJ1WXhBQvoBBAgAEEQ&cs=1&um=1&ie=UTF-8&fb=1&gl=br&sa=X&ftid=0x94dceffdee361f23:0x8a171c585692154a',
-    placeholder: 'Local a definir',
+      "https://www.google.com/maps?vet=10CAAQoqAOahcKEwjo8MbvkuiXAxUAAAAAHQAAAAAQDg..i&udm&fvr=1&pvq=Cg0vZy8xMWw2OTI1OV9mIhIKDHZpdmEgZXZlbnRvcxACGAM&lqi=Cgx2aXZhIGV2ZW50b3MiA4gBAUjtz4qRmbKAgAhaFhAAEAEYABgBIgx2aXZhIGV2ZW50b3OSAQxiYW5xdWV0X2hhbGyaAURDaTlEUVVsUlFVTnZaRU5vZEhsalJqbHZUMjF3VUU1c09WcE9NVXBRVkdwVmVHTXdkRmxUVjFad1ZERldiMlJ1WXhBQvoBBAgAEEQ&cs=1&um=1&ie=UTF-8&fb=1&gl=br&sa=X&ftid=0x94dceffdee361f23:0x8a171c585692154a",
+    placeholder: "Local a definir",
   },
 
   /**
@@ -35,12 +35,12 @@ export const inviteConfig = {
    * provisório, ajuste em durationHours.
    */
   calendar: {
-    date: '2027-01-23', // AAAA-MM-DD
-    time: '19:00', // HH:mm
-    timeZone: 'America/Sao_Paulo',
+    date: "2027-01-23", // AAAA-MM-DD
+    time: "19:00", // HH:mm
+    timeZone: "America/Sao_Paulo",
     durationHours: 4,
-    title: '21st Birthday: Fantasy Edition — Linda',
-    description: 'Aniversário de 21 anos da Linda.',
+    title: "21st Birthday: Fantasy Edition — Linda",
+    description: "Aniversário de 21 anos da Linda.",
   },
 
   /**
@@ -49,16 +49,25 @@ export const inviteConfig = {
    * pessoas) e o WhatsApp abre com a mensagem pronta para enviar.
    */
   rsvp: {
-    title: 'Confirmar presença',
+    title: "Confirmar presença",
     // Número que recebe as confirmações (+55 41 9698-7814): só dígitos, com 55 + DDD.
     // Se o WhatsApp não encontrar o contato, confira se falta o 9 na frente
     // (ex.: '5541996987814').
-    whatsappNumber: '554196987814',
+    whatsappNumber: "554196987814",
     // Textos da mensagem. {nome}, {acompanhantes} e {pessoas} são preenchidos sozinhos.
     messageAlone:
-      'Olá, Linda! Aqui é {nome} e estou confirmando minha presença no seu aniversário! Vou sozinho(a).',
+      "Olá, Linda! Aqui é {nome} e estou confirmando minha presença no seu aniversário! Vou sozinho(a).",
     messageWithGuests:
-      'Olá, Linda! Aqui é {nome} e estou confirmando minha presença no seu aniversário! Vou levar {pessoas}: {acompanhantes}.',
+      "Olá, Linda! Aqui é {nome} e estou confirmando minha presença no seu aniversário! Vou levar {pessoas}: {acompanhantes}.",
     maxGuests: 10,
+  },
+
+  /**
+   * Onde as confirmações ficam guardadas para o painel (Google Planilhas).
+   * Cole aqui o endereço do seu Apps Script (termina em /exec).
+   * Passo a passo: backend/LEIA-ME.md. Vazio = as confirmações seguem só pelo WhatsApp.
+   */
+  backend: {
+    url: "https://script.google.com/macros/s/AKfycbyPpg-otjCPay_krXj1IhmuTnD34Xz0NC_WUThAmZZEA7IMfRY6p8KfokS1Add4vmcT/exec",
   },
 };

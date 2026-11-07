@@ -14,9 +14,10 @@ const pct = (v, total) => `${(v / total) * 100}%`;
  * página 2 aparece por trás. Dispara onOpening (quando as abas começam a abrir)
  * e onOpened (quando acabou e o envelope pode sair de cena).
  */
-export default function Envelope({ onOpening, onOpened }) {
+export default function Envelope({ onOpening, onOpened, onAdmin }) {
   const [phase, setPhase] = useState('idle'); // idle | opening
   const timers = useRef([]);
+  const taps = useRef({ n: 0, first: 0 });
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
@@ -25,6 +26,22 @@ export default function Envelope({ onOpening, onOpened }) {
     setPhase('opening');
     timers.current.push(setTimeout(onOpening, T.doorsDelay));
     timers.current.push(setTimeout(onOpened, T.doorsDelay + T.doors + 60));
+  };
+
+  // Acesso escondido ao painel: 5 toques no canto inferior esquerdo em até 3 segundos
+  const secretTap = () => {
+    const t = taps.current;
+    const now = Date.now();
+    if (t.n === 0 || now - t.first > 3000) {
+      t.n = 1;
+      t.first = now;
+    } else {
+      t.n += 1;
+    }
+    if (t.n >= 5) {
+      t.n = 0;
+      onAdmin?.();
+    }
   };
 
   const leftW = L.split + L.overlap;
@@ -60,6 +77,7 @@ export default function Envelope({ onOpening, onOpened }) {
         >
           <img src={seal} alt="" draggable="false" />
         </button>
+        <button type="button" className="admin-hit" onClick={secretTap} tabIndex={-1} aria-hidden="true" />
       </div>
     </div>
   );

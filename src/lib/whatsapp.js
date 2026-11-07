@@ -2,6 +2,13 @@ import { inviteConfig } from '../config/inviteConfig.js';
 
 const clean = (v) => String(v ?? '').replace(/\s+/g, ' ').trim();
 
+/** ["Ana", "Bia", "Caio"] -> "Ana, Bia e Caio" */
+export function joinNames(list) {
+  const n = list.map(clean).filter(Boolean);
+  if (n.length <= 1) return n[0] ?? '';
+  return `${n.slice(0, -1).join(', ')} e ${n[n.length - 1]}`;
+}
+
 /** "1 pessoa" / "3 pessoas" */
 export const pessoas = (n) => `${n} ${n === 1 ? 'pessoa' : 'pessoas'}`;
 
